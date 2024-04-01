@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="ControlPanel.UserControls.DPad"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ControlPanel.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100">
+    <Viewbox StretchDirection="Both" Stretch="Fill">
+        <Canvas Height="100" Width="100">
+            <Ellipse Stroke="Gray" StrokeThickness="2" Width="100" Height="100"/>
+            <local:Button x:Name="LeftButton" Width="38" Height="38" Canvas.Top="31" Canvas.Left="3"/>
+            <local:Button x:Name="TopButton" Width="38" Height="38" Canvas.Top="3" Canvas.Left="31"/>
+            <local:Button x:Name="BottomButton" Width="38" Height="38" Canvas.Top="59" Canvas.Left="31"/>
+            <local:Button x:Name="RightButton" Width="38" Height="38" Canvas.Top="31" Canvas.Left="59"/>
+        </Canvas>
+    </Viewbox>
+</UserControl>
