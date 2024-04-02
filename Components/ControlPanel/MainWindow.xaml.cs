@@ -4,6 +4,7 @@ using SharpDX;
 using SharpDX.XInput;
 using System.Windows;
 using System.Windows.Input;
+using UDP;
 
 namespace ControlPanel
 {
@@ -12,7 +13,9 @@ namespace ControlPanel
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ControllerDataDto Data { get; } = new();
+        private volatile bool changed = false;
+        private volatile bool changeHandled = true;
+        private ControllerDataDto Data { get; set; } = new();
 
         public MainWindow()
         {
@@ -24,10 +27,15 @@ namespace ControlPanel
 
         private Worker GetControllerDataSender()
         {
+            var broadcaster = UdpBroadcaster.Create<ControllerDataDto>(10000, ControllerDataDto.ToString);
             return new Worker(() =>
             {
-
-            }, 10);
+                if (changed || !changeHandled)
+                {
+                    broadcaster.SendAsync(Data);
+                    changeHandled = true;
+                }
+            }, 100);
         }
 
         private UiWorker GetPanelWriter()
@@ -66,42 +74,70 @@ namespace ControlPanel
             var controller = new Controller(UserIndex.One);
             return new Worker(() =>
             {
-                Data.Connected = controller.IsConnected;
-                if (!Data.Connected)
+                if (changed = Data.Connected != controller.IsConnected)
+                {
+                    changeHandled = false;
+                }
+
+                if (!(Data.Connected = controller.IsConnected))
                 {
                     return;
                 }
 
                 try
                 {
-                    var data = controller.GetState().Gamepad;
+                    var gamepad = controller.GetState().Gamepad;
 
-                    Data.LeftStick = data.GetLeftStickValue(0.15);
-                    Data.RightStick = data.GetRightStickValue(0.10);
+                    var data = new ControllerDataDto()
+                    {
+                        Connected = controller.IsConnected,
 
-                    Data.LeftTrigger = data.LeftTrigger;
-                    Data.RightTrigger = data.RightTrigger;
+                        LeftStick = gamepad.GetLeftStickValue(0.15),
+                        RightStick = gamepad.GetRightStickValue(0.10),
 
-                    Data.DPad.Up = data.Buttons.HasFlag(GamepadButtonFlags.DPadUp);
-                    Data.DPad.Down = data.Buttons.HasFlag(GamepadButtonFlags.DPadDown);
-                    Data.DPad.Left = data.Buttons.HasFlag(GamepadButtonFlags.DPadLeft);
-                    Data.DPad.Right = data.Buttons.HasFlag(GamepadButtonFlags.DPadRight);
+                        LeftTrigger = gamepad.GetLeftTriggerValue(),
+                        RightTrigger = gamepad.GetRightTriggerValue(),
 
-                    Data.Buttons.A = data.Buttons.HasFlag(GamepadButtonFlags.A);
-                    Data.Buttons.B = data.Buttons.HasFlag(GamepadButtonFlags.B);
-                    Data.Buttons.X = data.Buttons.HasFlag(GamepadButtonFlags.X);
-                    Data.Buttons.Y = data.Buttons.HasFlag(GamepadButtonFlags.Y);
+                        DPad = new DPadDataDto()
+                        {
+                            Up = gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadUp),
+                            Down = gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadDown),
+                            Left = gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadLeft),
+                            Right = gamepad.Buttons.HasFlag(GamepadButtonFlags.DPadRight),
+                        },
 
-                    Data.Buttons.LeftThumb = data.Buttons.HasFlag(GamepadButtonFlags.LeftThumb);
-                    Data.Buttons.RightThumb = data.Buttons.HasFlag(GamepadButtonFlags.RightThumb);
+                        Buttons = new ButtonsDataDto()
+                        {
+                            A = gamepad.Buttons.HasFlag(GamepadButtonFlags.A),
+                            B = gamepad.Buttons.HasFlag(GamepadButtonFlags.B),
+                            X = gamepad.Buttons.HasFlag(GamepadButtonFlags.X),
+                            Y = gamepad.Buttons.HasFlag(GamepadButtonFlags.Y),
 
-                    Data.Buttons.LeftShoulder = data.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder);
-                    Data.Buttons.RightShoulder = data.Buttons.HasFlag(GamepadButtonFlags.RightShoulder);
+                            LeftThumb = gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftThumb),
+                            RightThumb = gamepad.Buttons.HasFlag(GamepadButtonFlags.RightThumb),
 
-                    Data.Buttons.Back = data.Buttons.HasFlag(GamepadButtonFlags.Back);
-                    Data.Buttons.Start = data.Buttons.HasFlag(GamepadButtonFlags.Start);
+                            LeftShoulder = gamepad.Buttons.HasFlag(GamepadButtonFlags.LeftShoulder),
+                            RightShoulder = gamepad.Buttons.HasFlag(GamepadButtonFlags.RightShoulder),
+
+                            Back = gamepad.Buttons.HasFlag(GamepadButtonFlags.Back),
+                            Start = gamepad.Buttons.HasFlag(GamepadButtonFlags.Start)
+                        }
+                    };
+
+                    if (changed |= Data != data)
+                    {
+                        changeHandled = false;
+                    }
+                    Data = data;
                 }
-                catch (SharpDXException ex) when (ex.Message.Contains("The device is not connected", StringComparison.InvariantCultureIgnoreCase)) { }
+                catch (SharpDXException ex) when (ex.Message.Contains("The device is not connected", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    if (changed |= Data.Connected != false)
+                    {
+                        changeHandled = false;
+                    }
+                    Data.Connected = false;
+                }
             }, 10);
         }
 

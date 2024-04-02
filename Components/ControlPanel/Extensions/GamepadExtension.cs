@@ -16,6 +16,16 @@ namespace ControlPanel.Extensions
             return GetKnobValue(gamepad.RightThumbX, gamepad.RightThumbY, threshold);
         }
 
+        public static double GetLeftTriggerValue(this Gamepad gamepad)
+        {
+            return GetTriggerValue(gamepad.LeftTrigger);
+        }
+
+        public static double GetRightTriggerValue(this Gamepad gamepad)
+        {
+            return GetTriggerValue(gamepad.RightTrigger);
+        }
+
         private static Vector GetKnobValue(short x, short y, double threshold = 0)
         {
             var vector = new Vector()
@@ -38,6 +48,11 @@ namespace ControlPanel.Extensions
         private static double GetStickAxisValue(short value)
         {
             return ((double)value).ScaleWithCutOff(short.MinValue, short.MaxValue, -1, 1);
+        }
+
+        private static double GetTriggerValue(byte value)
+        {
+            return ((double)value).Scale(byte.MinValue, byte.MaxValue, 0, 1);
         }
     }
 }
