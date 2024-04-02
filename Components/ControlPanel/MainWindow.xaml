@@ -12,7 +12,7 @@
         <UserControls:Stick x:Name="RightStick" HorizontalAlignment="Right" Margin="0,215,107,0" VerticalAlignment="Top" Height="200" Width="200"/>
         <ProgressBar x:Name="LeftTrigger" HorizontalAlignment="Left" Margin="10,10,0,11" Width="36" Foreground="Gray" Background="{x:Null}" BorderBrush="White" Orientation="Vertical" Maximum="1" SmallChange="0.001" LargeChange="0.1"/>
         <ProgressBar x:Name="RightTrigger" HorizontalAlignment="Left" Margin="594,10,0,11" Width="36" Background="{x:Null}" Foreground="Gray" BorderBrush="White" Orientation="Vertical" Maximum="1" LargeChange="0.1" SmallChange="0.001"/>
-        <UserControls:DPad x:Name="DPad" HorizontalAlignment="Left" Margin="107,215,0,0" VerticalAlignment="Top" Height="200" Width="200" LabelForLeftButton="" LabelFormBottomButton="" LabelForRightButton="" LabelForTopButton="" />
+        <UserControls:DPad x:Name="DPad" HorizontalAlignment="Left" Margin="107,215,0,0" VerticalAlignment="Top" Height="200" Width="200" LabelForLeftButton="˂" LabelFormBottomButton="˅" LabelForRightButton="˃" LabelForTopButton="˄" FontSize="20" />
         <UserControls:DPad x:Name="Letters" HorizontalAlignment="Right" Margin="0,10,59,0" VerticalAlignment="Top" Height="200" Width="200" LabelForLeftButton="X" LabelFormBottomButton="A" LabelForRightButton="B" LabelForTopButton="Y" FontSize="16" />
         <UserControls:Button x:Name="BackButton" HorizontalAlignment="Left" Margin="250,169,0,0" VerticalAlignment="Top" Height="48" Width="48" Label="back" FontSize="16" RenderTransformOrigin="-0.034,0.327"/>
         <UserControls:Button x:Name="StartButton" HorizontalAlignment="Right" Margin="0,169,250,0" VerticalAlignment="Top" Height="48" Width="48" Label="start" FontSize="16"/>
