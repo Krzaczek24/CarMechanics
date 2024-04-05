@@ -143,7 +143,7 @@ namespace Common
         public static Vector ConvertVector(string value)
         {
             var values = value.Split(delimiter);
-            return new Vector(ConvertDouble(values[0]), ConvertDouble(values[1]));
+            return new Vector(ConvertDouble(values[0][^4..]), ConvertDouble(values[1][^4..]));
         }
     }
 }

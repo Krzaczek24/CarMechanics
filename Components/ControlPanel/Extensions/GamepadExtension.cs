@@ -1,4 +1,4 @@
-﻿using Common.Extensions;
+﻿using KrzaqTools.Extensions;
 using SharpDX.XInput;
 using System.Windows;
 
@@ -39,7 +39,7 @@ namespace ControlPanel.Extensions
                 return new();
             }
 
-            double length = (vector.Length - threshold).ScaleWithCutOff(0, 1 - threshold, 0, 1);
+            double length = (vector.Length - threshold).ScaleAndCutOff(0, 1 - threshold, 0, 1);
             vector.Normalize();
             vector *= length;
             return vector;
@@ -47,7 +47,7 @@ namespace ControlPanel.Extensions
 
         private static double GetStickAxisValue(short value)
         {
-            return ((double)value).ScaleWithCutOff(short.MinValue, short.MaxValue, -1, 1);
+            return ((double)value).ScaleAndCutOff(short.MinValue, short.MaxValue, -1, 1);
         }
 
         private static double GetTriggerValue(byte value)

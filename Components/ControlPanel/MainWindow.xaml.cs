@@ -2,6 +2,7 @@
 using ControlPanel.Extensions;
 using SharpDX;
 using SharpDX.XInput;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using UDP;
@@ -76,6 +77,7 @@ namespace ControlPanel
             {
                 if (changed = Data.Connected != controller.IsConnected)
                 {
+                    Debug.WriteLine($"changed: {(changed ? 1 : 0)}");
                     changeHandled = false;
                 }
 
@@ -134,8 +136,10 @@ namespace ControlPanel
                 {
                     if (changed |= Data.Connected != false)
                     {
+                        Debug.WriteLine($"changed 2: {(changed ? 1 : 0)}");
                         changeHandled = false;
                     }
+                    Debug.WriteLine("not connected ex");
                     Data.Connected = false;
                 }
             }, 10);

@@ -1,7 +1,7 @@
-﻿using Common.Extensions;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows;
+using KrzaqTools.Extensions;
 
 namespace ControlPanel.Extensions
 {

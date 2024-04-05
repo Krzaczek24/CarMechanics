@@ -6,4 +6,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Krzaq.Extensions.IEnumerable" Version="1.5.0" />
+  </ItemGroup>
+
 </Project>
