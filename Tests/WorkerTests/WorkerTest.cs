@@ -1,6 +1,6 @@
 using Common;
 
-namespace Tests
+namespace Tests.WorkerTests
 {
     public class WorkerTests
     {

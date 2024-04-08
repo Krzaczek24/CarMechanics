@@ -9,7 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj" />
-    <ProjectReference Include="..\UDP\UDP\UDP.csproj" />
+    <ProjectReference Include="..\Libraries\UDP\UDP\UDP.csproj" />
   </ItemGroup>
 
 </Project>

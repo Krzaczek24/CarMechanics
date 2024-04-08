@@ -1,40 +1,35 @@
-﻿using KrzaqTools.Extensions;
-using System;
-using System.Collections.Frozen;
+﻿using System.Collections.Frozen;
 
 namespace Common.States
 {
-    public delegate void OnStateChangeEvent<T>(T oldState, T newState);
+    public delegate void OnStateChangeEvent<TState>(TState previousState, TState currentState);
 
-    public interface IStateMachine<T> where T : struct, Enum
+    public interface IStateMachine<TState, TSignal>
     {
-        T State { get; }
-        bool SendSignal(object signal);
+        TState State { get; }
+        bool SendSignal(TSignal signal);
+        event OnStateChangeEvent<TState> OnStateChange;
     }
 
-    internal class StateMachine<T> : IStateMachine<T> where T : struct, Enum
+    internal class StateMachine<TState, TSignal> : IStateMachine<TState, TSignal>
     {
-        private readonly FrozenDictionary<(T state, object signal), T> stateRelations;
-        
-        private event OnStateChangeEvent<T> OnStateChange = delegate { };
+        protected readonly FrozenDictionary<(TState state, TSignal signal), TState> stateRelations;
 
-        public T State { get; private set; }
+        public event OnStateChangeEvent<TState> OnStateChange = delegate { };
 
-        public StateMachine(StateMachineBuilder<T> builder)
+        public TState State { get; protected set; }
+
+        internal StateMachine(StateMachineBuilder<TState, TSignal> builder)
         {
             State = builder.InitialState;
-            stateRelations = builder.Relations.ToFrozenDictionary();
-            builder.EventListeners.ForEach(eventListener => OnStateChange += eventListener);
+            stateRelations = builder.Relations.ToFrozenDictionary(builder.Comparer);
         }
 
-        public bool SendSignal(object signal)
+        public bool SendSignal(TSignal signal)
         {
-            bool stateToChange = stateRelations.TryGetValue((State, signal), out T newState);
+            bool stateToChange = stateRelations.TryGetValue((State, signal), out TState? newState);
             if (stateToChange)
-            {
-                OnStateChange(State, newState);
-                State = newState;
-            }
+                OnStateChange(State, State = newState!);
             return stateToChange;
         }
     }

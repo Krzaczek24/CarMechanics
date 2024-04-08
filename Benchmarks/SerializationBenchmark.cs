@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Common;
+using Common.Controller;
 using System.Text;
 using System.Text.Json;
 
@@ -18,7 +18,7 @@ namespace Benchmarks
             for (int i = 0; i < iterations; i++)
             {
                 using var stream = new MemoryStream(bytes);
-                var obj = await JsonSerializer.DeserializeAsync<ControllerDataDto>(stream);
+                var obj = await JsonSerializer.DeserializeAsync<ControllerData>(stream);
             }
         }
 
@@ -29,13 +29,13 @@ namespace Benchmarks
             for (int i = 0; i < iterations; i++)
             {
                 string message = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-                var obj = await Task.FromResult(ControllerDataDto.FromString(message));
+                var obj = await Task.FromResult(ControllerDataSerializer.Deserialize(message));
             }
         }
 
         private static async Task<byte[]> GetBytesForNewtonsoftLibrary()
         {
-            var obj = new ControllerDataDto();
+            var obj = new ControllerData();
             using var stream = new MemoryStream();
             await JsonSerializer.SerializeAsync(stream, obj);
             byte[] bytes = stream.ToArray();
@@ -44,8 +44,8 @@ namespace Benchmarks
 
         private static async Task<byte[]> GetBytesForCustomMethod()
         {
-            var obj = new ControllerDataDto();
-            string str = obj.ToString();
+            var obj = new ControllerData();
+            string str = ControllerDataSerializer.Serialize(obj);
             byte[] bytes = Encoding.UTF8.GetBytes(str);
             return await Task.FromResult(bytes);
         }
