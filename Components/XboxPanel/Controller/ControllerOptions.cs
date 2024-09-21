@@ -1,4 +1,4 @@
-﻿namespace Common.WPF.Controller
+﻿namespace XboxPanel.Controller
 {
     public class ControllerOptions
     {

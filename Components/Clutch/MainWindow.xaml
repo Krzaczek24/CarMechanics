@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Clutch"
         mc:Ignorable="d"
-        Title="Clutch" Height="350" Width="600" ResizeMode="NoResize" Background="Black" Foreground="White">
+        Title="Clutch" Height="364" Width="600" ResizeMode="NoResize" Background="Black" Foreground="White">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="40*"/>

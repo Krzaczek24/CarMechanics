@@ -1,9 +1,8 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Threading;
+using System;
 
-namespace Common.WPF
+namespace Common
 {
     public class Worker : IDisposable
     {
@@ -90,10 +89,5 @@ namespace Common.WPF
                 disposed = true;
             }
         }
-    }
-
-    public class UiWorker(Action action, Dispatcher dispatcher, int interval) : Worker(action, interval)
-    {
-        protected override void Job(Action action) => dispatcher.Invoke(() => base.Job(action));
     }
 }

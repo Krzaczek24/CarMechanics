@@ -1,12 +1,11 @@
-﻿using Common.Controller;
-using Common.WPF;
-using Common.WPF.Controller;
+﻿using Common;
+using Common.Controller;
+using Common.Tools;
 using SharpDX;
 using SharpDX.XInput;
 using System.Windows;
 using System.Windows.Input;
-using Common.Extensions;
-using Common.Tools;
+using XboxPanel.Controller;
 using static Common.Constants.Settings;
 
 namespace ControlPanel
@@ -24,14 +23,14 @@ namespace ControlPanel
         {
             InitializeComponent();
             InitializeXboxPanel();
-            InitializeDataTransfer(Data);
+            InitializeDataTransfer();
             GetControllerReader().Run();
         }
 
-        private static void InitializeDataTransfer(ControllerData controllerData)
+        private void InitializeDataTransfer()
         {
             var writer = new MemorySharedFileWriter<ControllerDataDto>(MemorySharedFile.TEMP_FILE_PATH, MemorySharedFile.CONTROLLER_DATA_MAP);
-            controllerData.OnStateChange += (_, _) => writer.Write(controllerData.ToDto());
+            Data.OnStateChange += (_, _) => writer.Write(Data.ToDto());
         }
 
         private void InitializeXboxPanel()

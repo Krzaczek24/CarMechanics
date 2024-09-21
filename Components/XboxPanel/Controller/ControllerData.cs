@@ -1,8 +1,8 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
+using Common;
 using Common.Controller;
 
-namespace Common.WPF.Controller
+namespace XboxPanel.Controller
 {
     public delegate void StateChangedEvent(ControllerEventSource source, object value);
 

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ControlPanel"
         xmlns:UserControls="clr-namespace:ControlPanel.UserControls" x:Class="ControlPanel.MainWindow"
         mc:Ignorable="d"
-        Title="Control panel" Height="428" Width="640" ResizeMode="NoResize" Background="Black" Foreground="White" WindowStyle="None" MouseDown="Window_MouseDown">
+        Title="Control panel" Height="428" Width="640" ResizeMode="NoResize" Background="Black" Foreground="White" WindowStyle="None" MouseDown="Window_MouseDown" BorderBrush="Lime" BorderThickness="1">
     <Grid>
         <UserControls:Stick x:Name="LeftStick" HorizontalAlignment="Left" Margin="59,10,0,0" VerticalAlignment="Top" Height="200" Width="200"/>
         <UserControls:Stick x:Name="RightStick" HorizontalAlignment="Right" Margin="0,215,107,0" VerticalAlignment="Top" Height="200" Width="200"/>

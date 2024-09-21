@@ -1,0 +1,13 @@
+﻿<Window x:Class="Dashboard.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Dashboard"
+        xmlns:UserControls="clr-namespace:Dashboard.UserControls"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="428" Width="640" ResizeMode="NoResize" Background="Black" Foreground="White" WindowStyle="None" MouseDown="Window_MouseDown" BorderBrush="Lime" BorderThickness="1">
+    <Grid>
+        <UserControls:Gauge x:Name="Speedometer" HorizontalAlignment="Left" Margin="56,27,0,0" VerticalAlignment="Top" Height="360" Width="360" ScaleBrush="#FF00FF2F" ScaleMajorGridLines="9" ScaleMinorGridLines="3" ScaleMinorGridLineLength="4" ScaleMajorGridLineLength="6"/>
+    </Grid>
+</Window>

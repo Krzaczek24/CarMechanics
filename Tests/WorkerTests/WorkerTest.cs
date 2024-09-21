@@ -1,4 +1,4 @@
-using Common.WPF;
+using Common;
 
 namespace Tests.WorkerTests
 {

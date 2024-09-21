@@ -1,7 +1,7 @@
-﻿using ControlPanel.Extensions;
-using KrzaqTools.Extensions;
+﻿using KrzaqTools.Extensions;
 using System.Windows;
 using System.Windows.Controls;
+using XboxPanel.Extensions;
 
 namespace ControlPanel.UserControls
 {

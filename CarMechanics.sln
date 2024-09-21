@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WpfComponents", "WpfComponents", "{4B1EAB8D-A48D-431F-8357-FDF12C28098B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{4B1EAB8D-A48D-431F-8357-FDF12C28098B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clutch", "WpfComponents\Clutch\Clutch.csproj", "{4D44169E-082C-42E5-827D-03DCAAA036DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Clutch", "Components\Clutch\Clutch.csproj", "{4D44169E-082C-42E5-827D-03DCAAA036DA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControlPanel", "WpfComponents\ControlPanel\ControlPanel.csproj", "{30500A4D-4E75-4CD4-B8C6-ABA5DCD50853}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XboxPanel", "Components\XboxPanel\XboxPanel.csproj", "{30500A4D-4E75-4CD4-B8C6-ABA5DCD50853}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tests", "Tests\Tests.csproj", "{B738D059-86DB-4DA3-B4FF-9AEB21614711}"
 EndProject
@@ -16,6 +16,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{1F071B44-96C4-43D7-B786-C13C49E6865E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common.WPF", "Common.WPF\Common.WPF.csproj", "{FE211BBA-135C-4912-BB96-E68ADD3BCD73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dashboard", "Components\Dashboard\Dashboard.csproj", "{E5849EFA-9711-449D-B866-7D3B3F541F04}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Throttle", "Components\Throttle\Throttle.csproj", "{9441CDEF-189C-4939-9BC6-8191C00EC2D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +51,14 @@ Global
 		{FE211BBA-135C-4912-BB96-E68ADD3BCD73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE211BBA-135C-4912-BB96-E68ADD3BCD73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE211BBA-135C-4912-BB96-E68ADD3BCD73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5849EFA-9711-449D-B866-7D3B3F541F04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5849EFA-9711-449D-B866-7D3B3F541F04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5849EFA-9711-449D-B866-7D3B3F541F04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5849EFA-9711-449D-B866-7D3B3F541F04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9441CDEF-189C-4939-9BC6-8191C00EC2D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9441CDEF-189C-4939-9BC6-8191C00EC2D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9441CDEF-189C-4939-9BC6-8191C00EC2D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9441CDEF-189C-4939-9BC6-8191C00EC2D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +66,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{4D44169E-082C-42E5-827D-03DCAAA036DA} = {4B1EAB8D-A48D-431F-8357-FDF12C28098B}
 		{30500A4D-4E75-4CD4-B8C6-ABA5DCD50853} = {4B1EAB8D-A48D-431F-8357-FDF12C28098B}
+		{E5849EFA-9711-449D-B866-7D3B3F541F04} = {4B1EAB8D-A48D-431F-8357-FDF12C28098B}
+		{9441CDEF-189C-4939-9BC6-8191C00EC2D4} = {4B1EAB8D-A48D-431F-8357-FDF12C28098B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB3C054D-B62F-4EFD-AA0E-40BA72B3DF57}

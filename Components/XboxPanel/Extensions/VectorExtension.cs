@@ -2,7 +2,7 @@
 using System.Windows.Media;
 using System.Windows;
 
-namespace ControlPanel.Extensions
+namespace XboxPanel.Extensions
 {
     internal static class VectorExtension
     {

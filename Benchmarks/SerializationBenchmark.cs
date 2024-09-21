@@ -1,7 +1,4 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Common.WPF.Controller;
-using System.Text;
-using System.Text.Json;
 
 #pragma warning disable CA1822
 namespace Benchmarks
@@ -11,16 +8,16 @@ namespace Benchmarks
     {
         private const int iterations = 100000;
 
-        [Benchmark]
-        public async Task SerializationUsingNewtonsoftLibrary()
-        {
-            byte[] bytes = await GetBytesForNewtonsoftLibrary();
-            for (int i = 0; i < iterations; i++)
-            {
-                using var stream = new MemoryStream(bytes);
-                var obj = await JsonSerializer.DeserializeAsync<ControllerData>(stream);
-            }
-        }
+        //[Benchmark]
+        //public async Task SerializationUsingNewtonsoftLibrary()
+        //{
+        //    byte[] bytes = await GetBytesForNewtonsoftLibrary();
+        //    for (int i = 0; i < iterations; i++)
+        //    {
+        //        using var stream = new MemoryStream(bytes);
+        //        var obj = await JsonSerializer.DeserializeAsync<ControllerData>(stream);
+        //    }
+        //}
 
         //[Benchmark]
         //public async Task SerializationUsingCustomMethod()
@@ -33,14 +30,14 @@ namespace Benchmarks
         //    }
         //}
 
-        private static async Task<byte[]> GetBytesForNewtonsoftLibrary()
-        {
-            var obj = new ControllerData();
-            using var stream = new MemoryStream();
-            await JsonSerializer.SerializeAsync(stream, obj);
-            byte[] bytes = stream.ToArray();
-            return bytes;
-        }
+        //private static async Task<byte[]> GetBytesForNewtonsoftLibrary()
+        //{
+        //    var obj = new ControllerData();
+        //    using var stream = new MemoryStream();
+        //    await JsonSerializer.SerializeAsync(stream, obj);
+        //    byte[] bytes = stream.ToArray();
+        //    return bytes;
+        //}
 
         //private static async Task<byte[]> GetBytesForCustomMethod()
         //{

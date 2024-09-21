@@ -1,8 +1,7 @@
 ﻿using Common.Controller;
-using Common.WPF.Controller;
 using System.Numerics;
 
-namespace Common.Extensions
+namespace XboxPanel.Controller
 {
     public static class ControllerDataExtension
     {
