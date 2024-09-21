@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Common.Controller
+namespace Common.WPF.Controller
 {
     public delegate void OnValueChangedEvent<TValue>(TValue value) where TValue : struct;
 

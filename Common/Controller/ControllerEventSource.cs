@@ -13,19 +13,19 @@ namespace Common.Controller
         RightThumb = 1 << 2,
         Thumbs = LeftThumb | RightThumb,
 
-        LeftTrigger = 1 << 3,
-        RightTrigger = 1 << 4,
-        Triggers = LeftTrigger | RightTrigger,
+        TriggerLeft = 1 << 3,
+        TriggerRight = 1 << 4,
+        Triggers = TriggerLeft | TriggerRight,
 
         Analogs = Thumbs | Triggers,
 
-        LeftThumbButton = 1 << 5,
-        RightThumbButton = 1 << 6,
-        ThumbButtons = LeftThumbButton | RightThumbButton,
+        ThumbLeftButton = 1 << 5,
+        ThumbRightButton = 1 << 6,
+        ThumbButtons = ThumbLeftButton | ThumbRightButton,
 
-        LeftShoulder = 1 << 7,
-        RightShoulder = 1 << 8,
-        Shoulders = LeftShoulder | RightShoulder,
+        ShoulderLeft = 1 << 7,
+        ShoulderRight = 1 << 8,
+        Shoulders = ShoulderLeft | ShoulderRight,
 
         A = 1 << 9,
         B = 1 << 10,
@@ -43,6 +43,8 @@ namespace Common.Controller
         Start = 1 << 18,
         Functional = Back | Start,
 
-        Buttons = ThumbButtons | Shoulders | Letters | DPad | Functional
+        Buttons = ThumbButtons | Shoulders | Letters | DPad | Functional,
+
+        All = Analogs | Buttons
     }
 }

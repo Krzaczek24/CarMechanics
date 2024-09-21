@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace Common
+namespace Common.WPF
 {
     public class Worker : IDisposable
     {

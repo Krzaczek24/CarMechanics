@@ -15,7 +15,7 @@ namespace Tests.StatusMachineTests
                 .WithRelation(Relation.Create(stateA: false, stateB: true, aToBsignal: true, bToAsignal: false))
                 .Build();
 
-            toggle.OnStateChange += (previousState, newState) => eventParams = (previousState, newState);
+            toggle.OnStateChange += (args) => eventParams = (args.OldState, args.NewState);
         }
 
         [Test]

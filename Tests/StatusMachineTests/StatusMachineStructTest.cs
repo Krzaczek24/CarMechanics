@@ -19,7 +19,7 @@ namespace Tests.StatusMachineTests
                 .WithRelation(Relation.Create(StatusEnum.Undefined, ActionEnum.TotalShutdown)) // no sources
                 .Build();
 
-            machine.OnStateChange += (previousState, newState) => eventParams = (previousState, newState);
+            machine.OnStateChange += (args) => eventParams = (args.OldState, args.NewState);
         }
 
         [Test]

@@ -1,5 +1,5 @@
 ﻿using BenchmarkDotNet.Attributes;
-using Common.Controller;
+using Common.WPF.Controller;
 using System.Text;
 using System.Text.Json;
 
@@ -22,16 +22,16 @@ namespace Benchmarks
             }
         }
 
-        [Benchmark]
-        public async Task SerializationUsingCustomMethod()
-        {
-            byte[] bytes = await GetBytesForCustomMethod();
-            for (int i = 0; i < iterations; i++)
-            {
-                string message = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-                var obj = await Task.FromResult(ControllerDataSerializer.Deserialize(message));
-            }
-        }
+        //[Benchmark]
+        //public async Task SerializationUsingCustomMethod()
+        //{
+        //    byte[] bytes = await GetBytesForCustomMethod();
+        //    for (int i = 0; i < iterations; i++)
+        //    {
+        //        string message = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
+        //        var obj = await Task.FromResult(ControllerDataSerializer.Deserialize(message));
+        //    }
+        //}
 
         private static async Task<byte[]> GetBytesForNewtonsoftLibrary()
         {
@@ -42,12 +42,12 @@ namespace Benchmarks
             return bytes;
         }
 
-        private static async Task<byte[]> GetBytesForCustomMethod()
-        {
-            var obj = new ControllerData();
-            string str = ControllerDataSerializer.Serialize(obj);
-            byte[] bytes = Encoding.UTF8.GetBytes(str);
-            return await Task.FromResult(bytes);
-        }
+        //private static async Task<byte[]> GetBytesForCustomMethod()
+        //{
+        //    var obj = new ControllerData();
+        //    string str = ControllerDataSerializer.Serialize(obj);
+        //    byte[] bytes = Encoding.UTF8.GetBytes(str);
+        //    return await Task.FromResult(bytes);
+        //}
     }
 }

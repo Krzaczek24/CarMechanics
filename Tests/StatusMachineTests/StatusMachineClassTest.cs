@@ -18,7 +18,7 @@ namespace Tests.StatusMachineTests
                 .WithRelation(Relation.Create(StatusClass.None, ActionClass.PowerOnly, StatusClass.Both, StatusClass.PowerOnly)) // multiple sources
                 .Build();
 
-            machine.OnStateChange += (previousState, newState) => eventParams = (previousState, newState);
+            machine.OnStateChange += (args) => eventParams = (args.OldState, args.NewState);
         }
 
         [Test]

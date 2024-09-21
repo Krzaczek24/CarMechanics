@@ -1,4 +1,4 @@
-﻿namespace Common.Controller
+﻿namespace Common.WPF.Controller
 {
     public class ControllerOptions
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Windows;
+using Common.Controller;
 
-namespace Common.Controller
+namespace Common.WPF.Controller
 {
     public delegate void StateChangedEvent(ControllerEventSource source, object value);
 
@@ -11,25 +12,31 @@ namespace Common.Controller
 
         public ValueObservable<bool> Connected { get; } = new();
 
-        public SideValueObservables<(short x, short y), Vector> Thumb { get; }
+        public ValueObservable<(short X, short Y), Vector> ThumbLeft { get; }
 
-        public SideValueObservables<byte, double> Trigger { get; }
+        public ValueObservable<(short X, short Y), Vector> ThumbRight { get; }
 
-        public Button Button { get; }
+        public ValueObservable<byte, double> TriggerLeft { get; }
+
+        public ValueObservable<byte, double> TriggerRight { get; }
+
+        public Buttons Button { get; }
 
         public ControllerData(ControllerOptions? options = null)
         {
-            Thumb = new(thumb => ComputeThumbValue(thumb, options?.Threshold?.Thumb?.Left ?? 0), (thumb) => ComputeThumbValue(thumb, options?.Threshold?.Thumb?.Right ?? 0));
-            Trigger = new(trigger => ComputeTriggerValue(trigger, options?.Threshold?.Trigger?.Left ?? 0), (trigger) => ComputeTriggerValue(trigger, options?.Threshold?.Trigger?.Right ?? 0));
+            ThumbLeft = new(thumb => ComputeThumbValue(thumb, options?.Threshold?.Thumb?.Left ?? 0));
+            ThumbRight = new(thumb => ComputeThumbValue(thumb, options?.Threshold?.Thumb?.Right ?? 0));
+            TriggerLeft = new(trigger => ComputeTriggerValue(trigger, options?.Threshold?.Trigger?.Left ?? 0));
+            TriggerRight = new(trigger => ComputeTriggerValue(trigger, options?.Threshold?.Trigger?.Right ?? 0));
             Button = new();
 
             Connected.OnValueChanged += (value) => OnStateChange(ControllerEventSource.Connection, value);
 
-            Thumb.Left.OnValueChanged += (value) => OnStateChange(ControllerEventSource.LeftThumb, value);
-            Thumb.Right.OnValueChanged += (value) => OnStateChange(ControllerEventSource.RightThumb, value);
+            ThumbLeft.OnValueChanged += (value) => OnStateChange(ControllerEventSource.LeftThumb, value);
+            ThumbRight.OnValueChanged += (value) => OnStateChange(ControllerEventSource.RightThumb, value);
 
-            Trigger.Left.OnValueChanged += (value) => OnStateChange(ControllerEventSource.LeftTrigger, value);
-            Trigger.Right.OnValueChanged += (value) => OnStateChange(ControllerEventSource.RightTrigger, value);
+            TriggerLeft.OnValueChanged += (value) => OnStateChange(ControllerEventSource.TriggerLeft, value);
+            TriggerRight.OnValueChanged += (value) => OnStateChange(ControllerEventSource.TriggerRight, value);
 
             Button.A.OnValueChanged += (value) => OnStateChange(ControllerEventSource.A, value);
             Button.B.OnValueChanged += (value) => OnStateChange(ControllerEventSource.B, value);
@@ -44,11 +51,11 @@ namespace Common.Controller
             Button.Back.OnValueChanged += (value) => OnStateChange(ControllerEventSource.Back, value);
             Button.Start.OnValueChanged += (value) => OnStateChange(ControllerEventSource.Start, value);
 
-            Button.LeftShoulder.OnValueChanged += (value) => OnStateChange(ControllerEventSource.LeftShoulder, value);
-            Button.RightShoulder.OnValueChanged += (value) => OnStateChange(ControllerEventSource.RightShoulder, value);
+            Button.ShoulderLeft.OnValueChanged += (value) => OnStateChange(ControllerEventSource.ShoulderLeft, value);
+            Button.ShoulderRight.OnValueChanged += (value) => OnStateChange(ControllerEventSource.ShoulderRight, value);
 
-            Button.LeftThumb.OnValueChanged += (value) => OnStateChange(ControllerEventSource.LeftThumbButton, value);
-            Button.RightThumb.OnValueChanged += (value) => OnStateChange(ControllerEventSource.RightThumbButton, value);
+            Button.ThumbLeft.OnValueChanged += (value) => OnStateChange(ControllerEventSource.ThumbLeftButton, value);
+            Button.ThumbRight.OnValueChanged += (value) => OnStateChange(ControllerEventSource.ThumbRightButton, value);
         }
 
         public void SetValue(ControllerEventSource property, object value)
@@ -66,8 +73,8 @@ namespace Common.Controller
         {
             (property switch
             {
-                ControllerEventSource.LeftThumb => () => Thumb.Left.Value = value,
-                ControllerEventSource.RightThumb => () => Thumb.Right.Value = value,
+                ControllerEventSource.LeftThumb => () => ThumbLeft.Value = value,
+                ControllerEventSource.RightThumb => () => ThumbRight.Value = value,
                 _ => (Action)(() => { })
             })();
         }
@@ -76,8 +83,8 @@ namespace Common.Controller
         {
             (property switch
             {
-                ControllerEventSource.LeftTrigger => () => Trigger.Left.Value = value,
-                ControllerEventSource.RightTrigger => () => Trigger.Right.Value = value,
+                ControllerEventSource.TriggerLeft => () => TriggerLeft.Value = value,
+                ControllerEventSource.TriggerRight => () => TriggerRight.Value = value,
                 _ => (Action)(() => { })
             })();
         }
@@ -97,10 +104,10 @@ namespace Common.Controller
                 ControllerEventSource.DPadRight => () => Button.DPadRight.Value = value,
                 ControllerEventSource.Back => () => Button.Back.Value = value,
                 ControllerEventSource.Start => () => Button.Start.Value = value,
-                ControllerEventSource.LeftShoulder => () => Button.LeftShoulder.Value = value,
-                ControllerEventSource.RightShoulder => () => Button.RightShoulder.Value = value,
-                ControllerEventSource.LeftThumbButton => () => Button.LeftThumb.Value = value,
-                ControllerEventSource.RightThumbButton => () => Button.RightThumb.Value = value,
+                ControllerEventSource.ShoulderLeft => () => Button.ShoulderLeft.Value = value,
+                ControllerEventSource.ShoulderRight => () => Button.ShoulderRight.Value = value,
+                ControllerEventSource.ThumbLeftButton => () => Button.ThumbLeft.Value = value,
+                ControllerEventSource.ThumbRightButton => () => Button.ThumbRight.Value = value,
                 _ => (Action)(() => { })
             })();
         }
@@ -126,7 +133,7 @@ namespace Common.Controller
         }
     }
 
-    public class Button()
+    public class Buttons
     {
         public ValueObservable<bool> A { get; } = new();
         public ValueObservable<bool> B { get; } = new();
@@ -141,10 +148,10 @@ namespace Common.Controller
         public ValueObservable<bool> Back { get; } = new();
         public ValueObservable<bool> Start { get; } = new();
 
-        public ValueObservable<bool> LeftShoulder { get; } = new();
-        public ValueObservable<bool> RightShoulder { get; } = new();
+        public ValueObservable<bool> ShoulderLeft { get; } = new();
+        public ValueObservable<bool> ShoulderRight { get; } = new();
 
-        public ValueObservable<bool> LeftThumb { get; } = new();
-        public ValueObservable<bool> RightThumb { get; } = new();
+        public ValueObservable<bool> ThumbLeft { get; } = new();
+        public ValueObservable<bool> ThumbRight { get; } = new();
     }
 }

@@ -36,7 +36,7 @@ namespace Common.States
     public static class Relation
     {
         public static Relations<TState, TSignal> Create<TState, TSignal>(TState sourceState, TState targetState, TSignal signal, bool biDirectional = false)
-        {                
+        {
             return biDirectional ? [new(sourceState, targetState, signal), new(targetState, sourceState, signal)] : [new(sourceState, targetState, signal)];
         }
 
