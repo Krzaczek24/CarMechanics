@@ -8,8 +8,8 @@
              d:DesignHeight="100" d:DesignWidth="100">
     <Viewbox x:Name="LayoutRoot" StretchDirection="Both" Stretch="Fill">
         <Canvas Height="100" Width="100">
-            <Ellipse Stroke="Gray" StrokeThickness="2" Width="100" Height="100"/>
-            <Ellipse Stroke="Gray" StrokeThickness="2" Width="4" Height="4" Canvas.Left="48" Canvas.Top="48" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Ellipse Stroke="Gray" StrokeThickness="2" Width="100" Height="100" />
+            <Ellipse Stroke="Gray" StrokeThickness="4" Width="8" Height="8" Canvas.Left="46" Canvas.Top="46" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <Canvas x:Name="GaugeShield" Height="100" Width="100"/>
         </Canvas>
     </Viewbox>

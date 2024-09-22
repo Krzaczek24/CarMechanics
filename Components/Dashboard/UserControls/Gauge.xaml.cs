@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using Common;
 using Common.WPF;
 
 namespace Dashboard.UserControls
@@ -11,12 +12,18 @@ namespace Dashboard.UserControls
     /// </summary>
     public partial class Gauge : UserControl
     {
+        private const byte ByteZero = 0;
         private const byte MinScaleMajorGridLines = 2;
         private const byte MinScaleMinorGridLines = 0;
         private const byte DefaultScaleMajorGridLines = 9;
         private const byte DefaultScaleMinorGridLines = 3;
         private const byte DefaultScaleMajorGridLineLength = 6;
         private const byte DefaultScaleMinorGridLineLength = 4;
+        private const byte DefaultIndicatorLength = 36;
+        private const byte DefaultIndicatorThickness = 3;
+
+        private static readonly Brush DefaultScaleBrush = Brushes.Lime;
+        private static readonly Brush DefaultIndicatorBrush = Brushes.Wheat;
 
         private const double Angle = (Math.PI / 180) * 120;
         private const double HalfSize = 50;
@@ -76,20 +83,34 @@ namespace Dashboard.UserControls
             set => SetValue(IndicatorBrushProperty, value);
         }
 
+        public byte IndicatorLength
+        {
+            get => (byte)GetValue(IndicatorLengthProperty);
+            set => SetValue(IndicatorLengthProperty, value);
+        }
+
+        public byte IndicatorThickness
+        {
+            get => (byte)GetValue(IndicatorThicknessProperty);
+            set => SetValue(IndicatorThicknessProperty, value);
+        }
+
         public double Value
         {
             get => (double)GetValue(ValueProperty);
             set => SetValue(ValueProperty, value);
         }
 
-        public static readonly DependencyProperty ScaleBrushProperty = DependencyProperty.Register(nameof(ScaleBrushProperty), typeof(Brush), typeof(Gauge), new PropertyMetadata(new SolidColorBrush(Colors.Lime), GaugePropsChanged));
+        public static readonly DependencyProperty ScaleBrushProperty = DependencyProperty.Register(nameof(ScaleBrushProperty), typeof(Brush), typeof(Gauge), new PropertyMetadata(DefaultScaleBrush, GaugePropsChanged));
         public static readonly DependencyProperty ScaleMinValueProperty = DependencyProperty.Register(nameof(ScaleMinValueProperty), typeof(int), typeof(Gauge), new PropertyMetadata(0, GaugePropsChanged));
         public static readonly DependencyProperty ScaleMaxValueProperty = DependencyProperty.Register(nameof(ScaleMaxValueProperty), typeof(int), typeof(Gauge), new PropertyMetadata(100, GaugePropsChanged));
         public static readonly DependencyProperty ScaleMajorGridLinesProperty = DependencyProperty.Register(nameof(ScaleMajorGridLinesProperty), typeof(byte), typeof(Gauge), new PropertyMetadata(DefaultScaleMajorGridLines, GaugePropsChanged), value => value is >= MinScaleMajorGridLines);
         public static readonly DependencyProperty ScaleMinorGridLinesProperty = DependencyProperty.Register(nameof(ScaleMinorGridLinesProperty), typeof(byte), typeof(Gauge), new PropertyMetadata(DefaultScaleMinorGridLines, GaugePropsChanged), value => value is >= MinScaleMinorGridLines);
         public static readonly DependencyProperty ScaleMajorGridLineLengthProperty = DependencyProperty.Register(nameof(ScaleMajorGridLineLengthProperty), typeof(byte), typeof(Gauge), new PropertyMetadata(DefaultScaleMajorGridLineLength, GaugePropsChanged));
         public static readonly DependencyProperty ScaleMinorGridLineLengthProperty = DependencyProperty.Register(nameof(ScaleMinorGridLineLengthProperty), typeof(byte), typeof(Gauge), new PropertyMetadata(DefaultScaleMinorGridLineLength, GaugePropsChanged));
-        public static readonly DependencyProperty IndicatorBrushProperty = DependencyProperty.Register(nameof(IndicatorBrushProperty), typeof(Brush), typeof(Gauge), new PropertyMetadata(default(Brush), GaugePropsChanged));
+        public static readonly DependencyProperty IndicatorBrushProperty = DependencyProperty.Register(nameof(IndicatorBrushProperty), typeof(Brush), typeof(Gauge), new PropertyMetadata(DefaultIndicatorBrush, GaugePropsChanged));
+        public static readonly DependencyProperty IndicatorLengthProperty = DependencyProperty.Register(nameof(IndicatorLengthProperty), typeof(byte), typeof(Gauge), new PropertyMetadata(DefaultIndicatorLength, GaugePropsChanged), value => value is > ByteZero);
+        public static readonly DependencyProperty IndicatorThicknessProperty = DependencyProperty.Register(nameof(IndicatorThicknessProperty), typeof(byte), typeof(Gauge), new PropertyMetadata(DefaultIndicatorThickness, GaugePropsChanged), value => value is > ByteZero);
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(ValueProperty), typeof(double), typeof(Gauge), new PropertyMetadata(0d, ValueChanged));
 
         private static void GaugePropsChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) => ((Gauge)sender).DrawGauge();
@@ -105,7 +126,7 @@ namespace Dashboard.UserControls
             GaugeShield.Children.Clear();
             DrawScaleArc();
             DrawScaleGrid();
-            DrawGaugeIndicator();
+            DrawIndicatorArrow();
         }
 
         private void DrawScaleArc()
@@ -124,6 +145,7 @@ namespace Dashboard.UserControls
         {
             DrawScaleMajorGrid();
             DrawScaleMinorGrid();
+            DrawScaleValues();
         }
 
         private void DrawScaleMajorGrid()
@@ -185,9 +207,29 @@ namespace Dashboard.UserControls
             }
         }
 
-        private void DrawGaugeIndicator()
+        private void DrawScaleValues()
         {
 
+        }
+
+        private void DrawIndicatorArrow()
+        {
+            double sinus = Math.Sin(Angle);
+            double cosine = Math.Cos(Angle);
+
+            var indicatorArrow = new Line
+            {
+                Stroke = IndicatorBrush,
+                StrokeThickness = IndicatorThickness,
+                X1 = HalfSize + 3 * sinus,
+                Y1 = HalfSize + 3 * cosine,
+                X2 = HalfSize - IndicatorLength * sinus,
+                Y2 = HalfSize - IndicatorLength * cosine,
+                StrokeEndLineCap = PenLineCap.Triangle,
+                StrokeStartLineCap = PenLineCap.Square,
+            };
+
+            GaugeShield.Children.Add(indicatorArrow);
         }
     }
 }
