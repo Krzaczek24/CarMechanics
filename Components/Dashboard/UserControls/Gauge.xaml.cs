@@ -1,9 +1,12 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using System.Windows.Shapes;
+using Common;
 using Common.WPF;
 using KrzaqTools.Extensions;
+using Newtonsoft.Json.Linq;
 
 namespace Dashboard.UserControls
 {
@@ -34,14 +37,18 @@ namespace Dashboard.UserControls
         private const double DefaultScaleValuesXShift = 0;
         private const double DefaultScaleValuesYShift = 0;
         private const double DefaultScaleValuesYMultiplier = 1.05;
+        private const double DefaultTextYShift = 20;
+        private const double DefaultTextSize = 8;
 
         private static readonly Brush DefaultScaleBrush = Brushes.Lime;
         private static readonly Brush DefaultIndicatorBrush = Brushes.Wheat;
         private static readonly Brush DefaultOuterBorderBrush = Brushes.Gray;
         private static readonly Brush DefaultCentralPointBrush = Brushes.Gray;
         private static readonly Brush DefaultScaleValuesBrush = Brushes.White;
+        private static readonly Brush DefaultTextBrush = Brushes.Gray;
 
         private static readonly FontFamily DefaultScaleValuesFont = new("Gadugi");
+        private static readonly FontFamily DefaultTextFont = new("Gadugi");
 
         private const double DegreesRadianFactor = Math.PI / 180;
         private const double HalfSize = 50;
@@ -225,6 +232,36 @@ namespace Dashboard.UserControls
             set => SetValue(ValueProperty, value);
         }
 
+        public double TextYShift
+        {
+            get => (double)GetValue(TextYShiftProperty);
+            set => SetValue(TextYShiftProperty, value);
+        }
+
+        public double TextSize
+        {
+            get => (double)GetValue(TextSizeProperty);
+            set => SetValue(TextSizeProperty, value);
+        }
+
+        public Brush TextBrush
+        {
+            get => (Brush)GetValue(TextBrushProperty);
+            set => SetValue(TextBrushProperty, value);
+        }
+
+        public FontFamily TextFont
+        {
+            get => (FontFamily)GetValue(TextFontProperty);
+            set => SetValue(TextFontProperty, value);
+        }
+
+        public string Text
+        {
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
+        }
+
         public static readonly DependencyProperty OuterBorderThicknessProperty = DependencyProperty.Register(nameof(OuterBorderThicknessProperty), typeof(double), typeof(Gauge), new PropertyMetadata(DefaultOuterBorderThickness, OuterBorderPropsChanged));
         public static readonly DependencyProperty OuterBorderBrushProperty = DependencyProperty.Register(nameof(OuterBorderBrushProperty), typeof(Brush), typeof(Gauge), new PropertyMetadata(DefaultOuterBorderBrush, OuterBorderPropsChanged));
         public static readonly DependencyProperty CentralPointBrushProperty = DependencyProperty.Register(nameof(CentralPointBrushProperty), typeof(Brush), typeof(Gauge), new PropertyMetadata(DefaultCentralPointBrush, CentralPointPropsChanged));
@@ -253,6 +290,11 @@ namespace Dashboard.UserControls
         public static readonly DependencyProperty IndicatorInnerRangeProperty = DependencyProperty.Register(nameof(IndicatorInnerRangeProperty), typeof(double), typeof(Gauge), new PropertyMetadata(DefaultIndicatorRangeStart, GaugeScalePropsChanged));
         public static readonly DependencyProperty IndicatorThicknessProperty = DependencyProperty.Register(nameof(IndicatorThicknessProperty), typeof(double), typeof(Gauge), new PropertyMetadata(DefaultIndicatorThickness, GaugeScalePropsChanged), value => value is > 0d);
         public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(ValueProperty), typeof(double), typeof(Gauge), new PropertyMetadata(DefaultScaleMinValue, ValueChanged));
+        public static readonly DependencyProperty TextYShiftProperty = DependencyProperty.Register(nameof(TextYShiftProperty), typeof(double), typeof(Gauge), new PropertyMetadata(DefaultTextYShift, GaugeScalePropsChanged));
+        public static readonly DependencyProperty TextSizeProperty = DependencyProperty.Register(nameof(TextSizeProperty), typeof(double), typeof(Gauge), new PropertyMetadata(DefaultTextSize, GaugeScalePropsChanged));
+        public static readonly DependencyProperty TextBrushProperty = DependencyProperty.Register(nameof(TextBrushProperty), typeof(Brush), typeof(Gauge), new PropertyMetadata(DefaultTextBrush, GaugeScalePropsChanged));
+        public static readonly DependencyProperty TextFontProperty = DependencyProperty.Register(nameof(TextFontProperty), typeof(FontFamily), typeof(Gauge), new PropertyMetadata(DefaultTextFont, GaugeScalePropsChanged));
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register(nameof(TextProperty), typeof(string), typeof(Gauge), new PropertyMetadata(string.Empty, GaugeScalePropsChanged));
 
         private static void OuterBorderPropsChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
@@ -301,6 +343,7 @@ namespace Dashboard.UserControls
             DrawScaleMinorGrid();
             DrawScaleValue();
             DrawIndicatorArrow();
+            DrawText();
         }
 
         private void DrawScaleArc()
@@ -355,7 +398,7 @@ namespace Dashboard.UserControls
 
             double valueShift = (ScaleMaxValue - ScaleMinValue) / (ScaleMajorGridLines - 1);
             double angleShift = (ScaleAngleStartRadians - ScaleAngleEndRadians) / (ScaleMajorGridLines - 1);
-            double digitWidth = ScaleValuesSize * 0.8;
+            double digitWidth = ScaleValuesSize * 0.6;
             double height = ScaleValuesSize * 1.4;
             double yRadius = ScaleValuesRadius * ScaleValuesYMultiplier;
 
@@ -439,14 +482,22 @@ namespace Dashboard.UserControls
             GaugeShield.Children.Add(Indicator);
         }
 
-        private static double GetScaleValueXOffsetMultiplier(double angle) => angle switch
+        private void DrawText()
         {
-            _ when angle % Math.PI == 0 => 0.5,
-            > Math.PI => 1,
-            > 0 => 0,
-            < -Math.PI => 0,
-            < 0 => 1,
-            _ => throw new ArgumentOutOfRangeException()
-        };
+            var label = new TextBlock
+            {
+                Foreground = TextBrush,
+                FontSize = TextSize,
+                TextAlignment = TextAlignment.Center,
+                Width = HalfSize,
+                Text = Text,
+                FontFamily = TextFont
+            };
+
+            Canvas.SetTop(label, HalfSize + TextYShift);
+            Canvas.SetLeft(label, HalfSize / 2);
+
+            GaugeShield.Children.Add(label);
+        }
     }
 }

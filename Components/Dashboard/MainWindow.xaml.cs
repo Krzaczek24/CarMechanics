@@ -11,6 +11,18 @@ namespace Dashboard
         public MainWindow()
         {
             InitializeComponent();
+            InitializeUIWorkers();
+            InitializeDataReceivers();
+        }
+
+        private void InitializeUIWorkers()
+        {
+
+        }
+
+        private void InitializeDataReceivers()
+        {
+
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -19,11 +31,6 @@ namespace Dashboard
             {
                 DragMove();
             }
-        }
-
-        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
-        {
-            Speedometer.Value = e.NewValue;
         }
     }
 }
