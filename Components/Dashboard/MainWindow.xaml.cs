@@ -20,5 +20,10 @@ namespace Dashboard
                 DragMove();
             }
         }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Speedometer.Value = e.NewValue;
+        }
     }
 }

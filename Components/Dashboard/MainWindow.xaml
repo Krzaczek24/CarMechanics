@@ -8,6 +8,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="428" Width="640" ResizeMode="NoResize" Background="Black" Foreground="White" WindowStyle="None" MouseDown="Window_MouseDown" BorderBrush="Lime" BorderThickness="1">
     <Grid>
-        <UserControls:Gauge x:Name="Speedometer" HorizontalAlignment="Left" Margin="56,27,0,0" VerticalAlignment="Top" Height="360" Width="360" ScaleBrush="#FF00FF2F" ScaleMajorGridLines="9" ScaleMinorGridLines="3" ScaleMinorGridLineLength="4" ScaleMajorGridLineLength="6"/>
+        <UserControls:Gauge x:Name="Speedometer" HorizontalAlignment="Center" VerticalAlignment="Top" Height="360" Width="360" ScaleBrush="#FF00FF2F" ScaleMajorGridLines="9" ScaleMinorGridLines="3" ScaleMinorGridLineLength="4" ScaleMajorGridLineLength="6" Margin="0,10,0,0" IndicatorOuterRange="36" CentralPointSize="8" ScaleMaxValue="160" ScaleValuesRadius="40" ScaleAngleStart="120" ScaleAngleEnd="-120" ScaleValuesFont="Gadugi" ScaleValuesYShift="0" ScaleValuesYMultiplier="1" ShowScaleValues="True"/>
+        <Slider HorizontalAlignment="Center" Margin="0,400,0,0" VerticalAlignment="Top" Width="360" ValueChanged="Slider_ValueChanged" Maximum="180" Minimum="-20"/>
     </Grid>
 </Window>
