@@ -21,8 +21,10 @@ namespace Dashboard.UserControls
         private const double DefaultScaleRangeMargin = 4;
         private const int DefaultScaleMajorGridLines = 9;
         private const double DefaultScaleMajorGridLineLength = 6;
+        private const double DefaultScaleMajorGridThickness = 2;
         private const int DefaultScaleMinorGridLines = 3;
         private const double DefaultScaleMinorGridLineLength = 4;
+        private const double DefaultScaleMinorGridThickness = 1;
         private const double DefaultIndicatorThickness = 3;
         private const double DefaultIndicatorRangeEnd = 36;
         private const double DefaultIndicatorRangeStart = -3;
@@ -190,6 +192,12 @@ namespace Dashboard.UserControls
             set => SetValue(ScaleMajorGridLineLengthProperty, value);
         }
 
+        public double ScaleMajorGridThickness
+        {
+            get => (double)GetValue(ScaleMajorGridThicknessProperty);
+            set => SetValue(ScaleMajorGridThicknessProperty, value);
+        }
+
         public int ScaleMinorGridLines
         {
             get => (int)GetValue(ScaleMinorGridLinesProperty);
@@ -200,6 +208,12 @@ namespace Dashboard.UserControls
         {
             get => (double)GetValue(ScaleMinorGridLineLengthProperty);
             set => SetValue(ScaleMinorGridLineLengthProperty, value);
+        }
+
+        public double ScaleMinorGridThickness
+        {
+            get => (double)GetValue(ScaleMinorGridThicknessProperty);
+            set => SetValue(ScaleMinorGridThicknessProperty, value);
         }
 
         public Brush IndicatorBrush
@@ -283,6 +297,8 @@ namespace Dashboard.UserControls
         public static readonly DependencyProperty ScaleMaxValueProperty = DependencyProperty.Register(nameof(ScaleMaxValueProperty), typeof(double), typeof(Gauge), new PropertyMetadata(DefaultScaleMaxValue, GaugeScalePropsChanged));
         public static readonly DependencyProperty ScaleMajorGridLinesProperty = DependencyProperty.Register(nameof(ScaleMajorGridLinesProperty), typeof(int), typeof(Gauge), new PropertyMetadata(DefaultScaleMajorGridLines, GaugeScalePropsChanged), value => value is >= MinScaleMajorGridLines);
         public static readonly DependencyProperty ScaleMinorGridLinesProperty = DependencyProperty.Register(nameof(ScaleMinorGridLinesProperty), typeof(int), typeof(Gauge), new PropertyMetadata(DefaultScaleMinorGridLines, GaugeScalePropsChanged), value => value is >= MinScaleMinorGridLines);
+        public static readonly DependencyProperty ScaleMajorGridThicknessProperty = DependencyProperty.Register(nameof(ScaleMajorGridThicknessProperty), typeof(double), typeof(Gauge), new PropertyMetadata(DefaultScaleMajorGridThickness, GaugeScalePropsChanged), value => value is >= 0d);
+        public static readonly DependencyProperty ScaleMinorGridThicknessProperty = DependencyProperty.Register(nameof(ScaleMinorGridThicknessProperty), typeof(double), typeof(Gauge), new PropertyMetadata(DefaultScaleMinorGridThickness, GaugeScalePropsChanged), value => value is >= 0d);
         public static readonly DependencyProperty ScaleMajorGridLineLengthProperty = DependencyProperty.Register(nameof(ScaleMajorGridLineLengthProperty), typeof(double), typeof(Gauge), new PropertyMetadata(DefaultScaleMajorGridLineLength, GaugeScalePropsChanged));
         public static readonly DependencyProperty ScaleMinorGridLineLengthProperty = DependencyProperty.Register(nameof(ScaleMinorGridLineLengthProperty), typeof(double), typeof(Gauge), new PropertyMetadata(DefaultScaleMinorGridLineLength, GaugeScalePropsChanged));
         public static readonly DependencyProperty IndicatorBrushProperty = DependencyProperty.Register(nameof(IndicatorBrushProperty), typeof(Brush), typeof(Gauge), new PropertyMetadata(DefaultIndicatorBrush, GaugeScalePropsChanged));
@@ -360,7 +376,7 @@ namespace Dashboard.UserControls
             };
             var size = new Size(OuterScaleRadius, OuterScaleRadius);
 
-            GaugeShield.DrawSimpleArc(startPoint, endPoint, size, ScaleBrush, 2);
+            GaugeShield.DrawSimpleArc(startPoint, endPoint, size, ScaleBrush, ScaleMajorGridThickness);
         }
 
         private void DrawScaleMajorGrid()
@@ -379,7 +395,7 @@ namespace Dashboard.UserControls
                 var gridLine = new Line
                 {
                     Stroke = ScaleBrush,
-                    StrokeThickness = 2,
+                    StrokeThickness = ScaleMajorGridThickness,
                     X1 = HalfSize - OuterScaleRadius * sinus,
                     Y1 = HalfSize - OuterScaleRadius * cosine,
                     X2 = HalfSize - innerScaleRadius * sinus,
@@ -448,7 +464,7 @@ namespace Dashboard.UserControls
                 var gridLine = new Line
                 {
                     Stroke = ScaleBrush,
-                    StrokeThickness = 1,
+                    StrokeThickness = ScaleMinorGridThickness,
                     X1 = HalfSize - OuterScaleRadius * sinus,
                     Y1 = HalfSize - OuterScaleRadius * cosine,
                     X2 = HalfSize - innerScaleRadius * sinus,

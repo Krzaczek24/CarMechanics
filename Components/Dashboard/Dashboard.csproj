@@ -9,11 +9,64 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Resources\abs_yellow.png" />
+    <None Remove="Resources\airbag_red.png" />
+    <None Remove="Resources\antifog_back_lights_yellow.png" />
+    <None Remove="Resources\antifog_front_lights_green.png" />
+    <None Remove="Resources\charging_red.png" />
+    <None Remove="Resources\check_engine_yellow.png" />
+    <None Remove="Resources\coolant_red.png" />
+    <None Remove="Resources\cruise_control_green.png" />
+    <None Remove="Resources\empty_tank_yellow.png" />
+    <None Remove="Resources\handbrake_red.png" />
+    <None Remove="Resources\high_beam_blue.png" />
+    <None Remove="Resources\oil_red.png" />
+    <None Remove="Resources\open_door_red.png" />
+    <None Remove="Resources\open_hood_red.png" />
+    <None Remove="Resources\open_trunc_red.png" />
+    <None Remove="Resources\position_lights_green.png" />
+    <None Remove="Resources\rear_windshield_heat_white.png" />
+    <None Remove="Resources\seatbelts_red.png" />
+    <None Remove="Resources\shift_green.png" />
+    <None Remove="Resources\steering_red.png" />
+    <None Remove="Resources\traction_off_yellow.png" />
+    <None Remove="Resources\traction_yellow.png" />
+    <None Remove="Resources\turn_left_green.png" />
+    <None Remove="Resources\turn_right_green.png" />
+    <None Remove="Resources\turn_signal_green.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Krzaq.Extensions.INumber" Version="1.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common.WPF\Common.WPF.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\abs_yellow.png" />
+    <Resource Include="Resources\antifog_back_lights_yellow.png" />
+    <Resource Include="Resources\antifog_front_lights_green.png" />
+    <Resource Include="Resources\coolant_red.png" />
+    <Resource Include="Resources\cruise_control_green.png" />
+    <Resource Include="Resources\empty_tank_yellow.png" />
+    <Resource Include="Resources\handbrake_red.png" />
+    <Resource Include="Resources\high_beam_blue.png" />
+    <Resource Include="Resources\oil_red.png" />
+    <Resource Include="Resources\open_door_red.png" />
+    <Resource Include="Resources\open_hood_red.png" />
+    <Resource Include="Resources\open_trunc_red.png" />
+    <Resource Include="Resources\position_lights_green.png" />
+    <Resource Include="Resources\rear_windshield_heat_white.png" />
+    <Resource Include="Resources\seatbelts_red.png" />
+    <Resource Include="Resources\shift_green.png" />
+    <Resource Include="Resources\steering_red.png" />
+    <Resource Include="Resources\traction_off_yellow.png" />
+    <Resource Include="Resources\traction_yellow.png" />
+    <Resource Include="Resources\turn_left_green.png" />
+    <Resource Include="Resources\turn_right_green.png" />
+    <Resource Include="Resources\turn_signal_green.png" />
   </ItemGroup>
 
 </Project>
